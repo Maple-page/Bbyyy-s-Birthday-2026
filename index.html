@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selamat Ulang Tahun, Sayang 🌙</title>
+
+<!--
+  ============================================================
+  CARA MENGEDIT (baca ini dulu!):
+  1. Ganti "[Nama Pacarmu]" di seluruh file dengan nama dia.
+  2. Ganti "[Namamu]" di bagian penutup dengan namamu.
+  3. Ganti isi pesan di bagian "Pesan Cinta" sesuai ceritamu sendiri.
+  4. Ganti foto: taruh 4 foto asli di folder assets/ dengan nama
+     foto1.jpg, foto2.jpg, foto3.jpg, foto4.jpg lalu update src
+     di bagian <section id="galeri">.
+  5. (Opsional) Video latar: taruh file video di
+     assets/video-latar.mp4 — kalau tidak ada, otomatis akan
+     memakai animasi lampu-lampu bergerak sebagai latar.
+  Detail lengkap ada di README.txt.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Latar animasi lampu-lampu / partikel, selalu aktif di seluruh halaman -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<!-- Tombol musik dihilangkan secara default karena tidak ada file audio bawaan.
+     Lihat README.txt jika ingin menambahkan musik latar sendiri. -->
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <video id="bg-video" autoplay muted loop playsinline>
+      <source src="assets/video-latar.mp4" type="video/mp4">
+    </video>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Untuk seseorang yang paling spesial</p>
+      <h1 class="hero__title">Selamat Ulang Tahun,<br><span class="hero__name">Ridha Hasna Farihah</span></h1>
+      <p class="hero__subtitle">bbyyyy maaf baru bisa buat ini dluuu. scroll pelan-pelan, ya.</p>
+      <button class="btn btn--ghost" id="scroll-down-btn">Buka Kejutannya</button>
+    </div>
+  </section>
+
+  <!-- ============ PESAN CINTA (variasi unik) ============ -->
+  <section class="messages" id="pesan">
+    <p class="section__eyebrow">Bagian satu</p>
+    <h2 class="section__title">yapping sedikit dari aku</h2>
+    <p class="section__lead">klik terus ada berbagai macam yapping</p>
+
+    <div class="message-stage">
+      <article class="message-card" id="message-card" data-style="1">
+        <p class="message-card__label">6 September 1999</p>
+        <p class="message-card__text" id="message-text">
+          Di antara semua hari dalam kalender, hari ini yang paling ingin aku tandai —
+          karena hari ini, dunia jadi lebih baik sejak kamu lahir.
+        </p>
+      </article>
+    </div>
+
+    <div class="message-controls">
+      <button class="btn btn--primary" id="next-message-btn">Pesan Selanjutnya</button>
+      <button class="btn btn--text" id="random-message-btn">Kejutkan Aku</button>
+    </div>
+  </section>
+
+  <!-- ============ GALERI KENANGAN ============ -->
+  <section class="gallery" id="galeri">
+    <p class="section__eyebrow">Bagian dua</p>
+    <h2 class="section__title">THE LEGEND OF BBYYY</h2>
+    <!-- <p class="section__lead">Klik salah satu foto untuk melihatnya lebih besar.</p> -->
+
+    <div class="polaroid-grid">
+      <button class="polaroid polaroid--1" data-full="assets/foto1.svg">
+        <img src="assets/1.png" alt="Foto kenangan 1 — ganti dengan fotomu">
+        <span class="polaroid__caption">preety little sweety bbyyy</span>
+      </button>
+      <button class="polaroid polaroid--2" data-full="assets/foto2.svg">
+        <img src="assets/2.jpeg" alt="Foto kenangan 2 — ganti dengan fotomu">
+        <span class="polaroid__caption">video pertama kali kamu kirim ke aku</span>
+      </button>
+      <button class="polaroid polaroid--3" data-full="assets/foto3.svg">
+        <img src="assets/3.jpeg" alt="Foto kenangan 3 — ganti dengan fotomu">
+        <span class="polaroid__caption">Pap pertama setelah balikan</span>
+      </button>
+      <button class="polaroid polaroid--4" data-full="assets/foto4.svg">
+        <img src="assets/4.png" alt="Foto kenangan 4 — ganti dengan fotomu">
+        <span class="polaroid__caption">bbyyy kicikkk gemushh</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ MINI GAME ============ -->
+  <section class="game" id="game">
+    <p class="section__eyebrow">Bagian tiga</p>
+    <h2 class="section__title">Tangkap ❤️</h2>
+    <p class="section__lead">❤️ akan jatuh dari atas selama 30 detik. kamu harus klik hati untuk dapat poin, tapi hindari bomnya juga 💣.</p>
+
+    <div class="game__hud">
+      <div class="game__stat">Skor: <span id="game-score">0</span></div>
+      <div class="game__stat">Waktu: <span id="game-time">30</span>s</div>
+    </div>
+
+    <div class="game__stage" id="game-stage">
+      <div class="game__idle" id="game-idle">
+        <button class="btn btn--primary" id="start-game-btn">Mulai Main</button>
+      </div>
+      <div class="game__result" id="game-result" hidden>
+        <p class="game__result-title">Waktu habis!</p>
+        <p class="game__result-score">Skor akhir kamu: <span id="final-score">0</span></p>
+        <p class="game__result-message" id="game-message"></p>
+        <button class="btn btn--primary" id="restart-game-btn">Main Lagi</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SURAT PENUTUP / TIUP LILIN ============ -->
+  <section class="closing" id="penutup">
+    <p class="section__eyebrow">Bagian terakhir</p>
+    <h2 class="section__title">Sebelum Tiup Lilin</h2>
+    <p class="section__lead">Buat satu permintaan dalam hati, terus tiup lilinnya.</p>
+
+    <div class="candle-wrap">
+      <button class="candle" id="candle-btn" aria-label="Tiup lilin">
+        <span class="candle__flame" id="candle-flame"></span>
+        <span class="candle__body"></span>
+      </button>
+      <p class="candle__hint" id="candle-hint">Klik lilinnya untuk meniup</p>
+    </div>
+
+    <article class="letter" id="letter" hidden>
+      <p>
+        bbyyy, makasih sudah jadi alasan aku senyum sendiri di waktu-waktu yang paling nggak terduga.
+        Semoga tahun ini membawa semua hal baik yang kamu doakan diam-diam, dan semoga aku masih dapat jatah
+        untuk terus ada di sampingmu waktu itu semua terjadi.
+      </p>
+      <p>Selamat ulang tahun. Aku sayanggg bbyyyy selalu dari kemarin, hari ini, dan seterusnyaaa.</p>
+      <p class="letter__signature">— ur naughty bee</p>
+    </article>
+
+    <button class="btn btn--text" id="replay-btn">Ulangi dari Awal</button>
+  </section>
+
+  <footer class="site-footer">
+    <p>Dibuat dengan ❤️ oleh beeee</p>
+  </footer>
+
+</main>
+
+<!-- Lightbox untuk galeri foto
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox__close" id="lightbox-close" aria-label="Tutup">×</button>
+  <img id="lightbox-img" src="gallery/1.png" alt="Foto kenangan diperbesar">
+</div> -->
+
+<script src="script.js"></script>
+</body>
+</html>
